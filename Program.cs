@@ -6,7 +6,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        var cities = await GetCitiesWithHighestPopulationInFranceAsync(15);
+        var cities = await GetCitiesWithHighestPopulationAsync(15);
 
         if (cities != null && cities.Count > 0)
         {
@@ -38,12 +38,13 @@ internal class Program
         Console.ReadLine();
     }
 
-    private async static Task<List<CityResponse>> GetCitiesWithHighestPopulationInFranceAsync(int limit)
+    private async static Task<List<CityResponse>> GetCitiesWithHighestPopulationAsync(int limit)
     {
+        string ISOCodeCountry = "ES";
         using HttpClient client = new HttpClient();
         client.DefaultRequestHeaders.Add("X-Api-Key", "aD5jOB3U948A4Mm6b/VuXw==1egSxgkPiCe4yUZ3");  
 
-        var response = await client.GetAsync($"https://api.api-ninjas.com/v1/city?country=FR&limit={limit}");
+        var response = await client.GetAsync($"https://api.api-ninjas.com/v1/city?country={ISOCodeCountry}&limit={limit}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -57,7 +58,7 @@ internal class Program
             }
             else
             {
-                Console.WriteLine("No cities found in France.");
+                Console.WriteLine("No cities found.");
             }
             return cities;
         }
